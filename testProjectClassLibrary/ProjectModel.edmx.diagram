@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9d0c881e47f346fd84a90587ceeacd87" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjectModel.salt" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.user" Width="1.75" PointX="1.25" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.usersNotesData" Width="1.5" PointX="3.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.usersPasswordsData" Width="1.5" PointX="4.375" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="ProjectModel.FK__usersNote__useri__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK__usersPass__useri__49C3F6B7" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

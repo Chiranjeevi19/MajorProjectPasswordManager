@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="salts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="salt" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="pwdhash" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="usersNotesData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" />
+          <Property Name="note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="usersPasswordsData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" />
+          <Property Name="username" Type="nvarchar(max)" />
+          <Property Name="password" Type="nvarchar(max)" />
+          <Property Name="url" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK__usersNote__useri__4CA06362">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="usersNotesData" Type="Self.usersNotesData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usersNotesData">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usersPass__useri__49C3F6B7">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="usersPasswordsData" Type="Self.usersPasswordsData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usersPasswordsData">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectModelStoreContainer">
+          <EntitySet Name="salts" EntityType="Self.salts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usersNotesData" EntityType="Self.usersNotesData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usersPasswordsData" EntityType="Self.usersPasswordsData" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__usersNote__useri__4CA06362" Association="Self.FK__usersNote__useri__4CA06362">
+            <End Role="users" EntitySet="users" />
+            <End Role="usersNotesData" EntitySet="usersNotesData" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usersPass__useri__49C3F6B7" Association="Self.FK__usersPass__useri__49C3F6B7">
+            <End Role="users" EntitySet="users" />
+            <End Role="usersPasswordsData" EntitySet="usersPasswordsData" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="salt">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="salt1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pwdhash" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="usersNotesDatas" Relationship="Self.FK__usersNote__useri__4CA06362" FromRole="users" ToRole="usersNotesData" />
+          <NavigationProperty Name="usersPasswordsDatas" Relationship="Self.FK__usersPass__useri__49C3F6B7" FromRole="users" ToRole="usersPasswordsData" />
+        </EntityType>
+        <EntityType Name="usersNotesData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="Self.FK__usersNote__useri__4CA06362" FromRole="usersNotesData" ToRole="users" />
+        </EntityType>
+        <EntityType Name="usersPasswordsData">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="Self.FK__usersPass__useri__49C3F6B7" FromRole="usersPasswordsData" ToRole="users" />
+        </EntityType>
+        <Association Name="FK__usersNote__useri__4CA06362">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="usersNotesData" Type="Self.usersNotesData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usersNotesData">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usersPass__useri__49C3F6B7">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="usersPasswordsData" Type="Self.usersPasswordsData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usersPasswordsData">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="salts" EntityType="Self.salt" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="usersNotesDatas" EntityType="Self.usersNotesData" />
+          <EntitySet Name="usersPasswordsDatas" EntityType="Self.usersPasswordsData" />
+          <AssociationSet Name="FK__usersNote__useri__4CA06362" Association="Self.FK__usersNote__useri__4CA06362">
+            <End Role="users" EntitySet="users" />
+            <End Role="usersNotesData" EntitySet="usersNotesDatas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usersPass__useri__49C3F6B7" Association="Self.FK__usersPass__useri__49C3F6B7">
+            <End Role="users" EntitySet="users" />
+            <End Role="usersPasswordsData" EntitySet="usersPasswordsDatas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectModelStoreContainer" CdmEntityContainer="ProjectEntities">
+          <EntitySetMapping Name="salts">
+            <EntityTypeMapping TypeName="ProjectModel.salt">
+              <MappingFragment StoreEntitySet="salts">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="salt1" ColumnName="salt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="ProjectModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="pwdhash" ColumnName="pwdhash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usersNotesDatas">
+            <EntityTypeMapping TypeName="ProjectModel.usersNotesData">
+              <MappingFragment StoreEntitySet="usersNotesData">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usersPasswordsDatas">
+            <EntityTypeMapping TypeName="ProjectModel.usersPasswordsData">
+              <MappingFragment StoreEntitySet="usersPasswordsData">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="url" ColumnName="url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
