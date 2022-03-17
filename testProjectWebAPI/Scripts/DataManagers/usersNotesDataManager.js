@@ -3,6 +3,9 @@
 }
 
 class UsersNotesDataManager {
+
+
+
     async postNoteData(url, data) {
         print("Data in dm" + data);
         const response = await fetch(url, {
@@ -24,5 +27,17 @@ class UsersNotesDataManager {
         const resData = await response.json();
         return resData;
     }
+
+    async updateNoteData(url, userid, note, updatedNote) {
+        let urlToUpdate = `${url}?userid=${userid}&note=${note}&updatedNote=${updatedNote}`;
+        return urlToUpdate;
+        //const response = await fetch(urlToUpdate, {
+        //    method: 'PUT',
+        //    headers: { 'Content-type': 'application/json', 'charset': 'utf-8' }
+        //});
+        //const resData = await response.json();
+        //return resData;
+    }
+
 
 }

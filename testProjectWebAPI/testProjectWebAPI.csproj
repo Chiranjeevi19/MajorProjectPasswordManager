@@ -326,6 +326,7 @@
     <Content Include="Scripts\Login\Login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Shared\AESService.js" />
+    <Content Include="Scripts\Shared\rpg.js" />
     <Content Include="Scripts\Signup\Signup.js" />
     <Content Include="Scripts\DataManagers\usersDataManager.js" />
     <Content Include="Web.config" />
@@ -346,6 +347,7 @@
     <Content Include="Views\Signup\Index.cshtml" />
     <Content Include="Views\AccountPasswordsData\Index.cshtml" />
     <Content Include="Views\AccountPasswordsData\LoginError.cshtml" />
+    <Content Include="Views\Shared\rpgView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

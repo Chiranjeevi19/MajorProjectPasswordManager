@@ -10,6 +10,7 @@ namespace testProjectWebAPI.Controllers
 {
     public class UsersPasswordsDataController : ApiController
     {
+        private List<usersPasswordsData> data;
         
 
         // GET api/<controller>/5
@@ -45,7 +46,8 @@ namespace testProjectWebAPI.Controllers
                         
                         entities.usersPasswordsDatas.Add(data);
                         entities.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, "Added successfully");
+                        int id = entities.usersPasswordsDatas.FirstOrDefault(x => x.userid == userId && x.url == data.url && x.username == data.username && x.password == data.password).id;
+                        return Request.CreateResponse(HttpStatusCode.OK, id.ToString());
                     }
                     else
                     {
@@ -60,11 +62,7 @@ namespace testProjectWebAPI.Controllers
             }
         }
 
-        // PUT api/<controller>/5
-        public void Put()
-        {
-            
-        }
+      
 
         // DELETE api/<controller>/5
         public HttpResponseMessage Delete([FromBody]usersPasswordsData data)
@@ -73,8 +71,9 @@ namespace testProjectWebAPI.Controllers
             {
                 using (ProjectEntities entities = new ProjectEntities())
                 {
-                    //var dataToBeDeleted = entities.usersPasswordsDatas.Where(x => x.userid == userid && x.url == url && x.username == uname && x.password == password.Replace(' ', '+'));
-                    entities.Entry(data).State = System.Data.Entity.EntityState.Deleted;
+                    Debug.WriteLine(data.password);
+                    usersPasswordsData dataToBeDeleted = entities.usersPasswordsDatas.FirstOrDefault(x => x.userid == data.userid && x.url == data.url && x.username == data.username && x.password == data.password);
+                    entities.Entry(dataToBeDeleted).State = System.Data.Entity.EntityState.Deleted;
                     entities.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, "Deleted Item");
                 }
@@ -85,6 +84,62 @@ namespace testProjectWebAPI.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadGateway, ex);
             }
         }
+
+
+
+        public int GetId(usersPasswordsData data)
+        {
+            using (ProjectEntities entities = new ProjectEntities())
+            {
+                this.data = entities.usersPasswordsDatas.Where(x => x.userid == data.userid).ToList();
+                foreach (usersPasswordsData item in this.data)
+                {
+                    if (item.url == data.url && item.username == data.username && item.password == data.password.Replace(' ','+'))
+                    {
+                        return item.id;
+                    }
+                }
+                return -1;
+            }
+        }
+
+
+
+        [HttpPut]
+        public HttpResponseMessage updateData([FromBody] usersPasswordsData newData)
+        {
+            try
+            {
+                using (ProjectEntities entities = new ProjectEntities())
+                {
+                    int idToBeUpdated = newData.id;
+                    if (idToBeUpdated != -1)
+                    {
+                        usersPasswordsData finaldata = entities.usersPasswordsDatas.FirstOrDefault(x => x.id == idToBeUpdated);
+                        finaldata.username = newData.username;
+                        finaldata.password = newData.password;
+                        finaldata.url = newData.url;
+                        entities.usersPasswordsDatas.Add(finaldata);
+                        entities.Entry(finaldata).State = System.Data.Entity.EntityState.Modified;
+                        entities.SaveChanges();
+                        return Request.CreateResponse(HttpStatusCode.OK, "Updated Item");
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, "Item not found");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NoContent, ex);
+            }
+        }
+
+
+
+
+
 
     }
 }
